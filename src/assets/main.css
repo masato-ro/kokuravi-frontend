@@ -1,0 +1,183 @@
+@import './base.css';
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+  color: #333333; /* 確保文字顔色與背景有足夠的對比度 */
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1); /* 鏈接顔色 */
+  transition: 0.4s;
+  padding: 3px;
+}
+
+a:hover {
+  color: #0056b3; /* 鏈接懸停顔色 */
+}
+
+h1 {
+  margin-bottom: 1rem;
+  color: #007bff;
+}
+
+h2 {
+  color: #333333; /* 確保標題顔色清晰 */
+}
+
+p {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  margin-right: 0.5rem; /* 設定右側的外邊距 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加陰影效果 */
+}
+
+button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加陰影效果 */
+}
+
+button.delete,
+button.cancel {
+  background-color: #ccc;
+  color: black;
+}
+
+button.delete:hover,
+button.cancel:hover {
+  background-color: #999;
+}
+
+button:disabled {
+  background-color: #ccc;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-group textarea {
+  min-height: 100px; /* 設定文本區域的最小高度 */
+}
+
+.tooltip {
+  display: inline-block;
+  position: relative;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 200px; /* Adjust width as needed */
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: 100%; /* Position below the link */
+  left: 50%;
+  margin-left: -100px; /* Center the tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+  transform: translateY(10px); /* Slightly offset the tooltip to be below the link */
+}
+
+.error-message {
+  color: red;
+  margin-top: 1rem;
+  border: 1px solid red; /* 添加邊框 */
+  background-color: rgba(255, 0, 0, 0.1); /* 半透明背景 */
+  padding: 10px; /* 添加內邊距 */
+}
+
+.success-message {
+  color: green;
+  margin-top: 1rem;
+  border: 1px solid green; /* 添加邊框 */
+  background-color: rgba(0, 255, 0, 0.1); /* 半透明背景 */
+  padding: 10px; /* 添加內邊距 */
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* 設定較高的 z-index */
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.modal-content button {
+  margin-top: 16px; /* 調整此值以改變距離 */
+}
+
+.favicon {
+  width: 16px;  /* 设定固定宽度 */
+  height: 16px; /* 设定固定高度 */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加陰影效果 */
+}
+
+th, td {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f4f4;
+}
