@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="profile-container">
-        <h1>修改用戶信息</h1>
+        <h1>修改用戶資料</h1>
         <form @submit.prevent="updateProfile">
             <div class="form-group">
             <label for="username">用戶名：</label>
@@ -42,10 +42,10 @@
             </div>
             <button type="submit" :disabled="isLoading">{{ isLoading ? '更新中...' : '更新資料' }}</button>
         </form>
-        <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-        <p v-if="successMessage" class="success">{{ successMessage }}</p>
+        <div class="error-message" v-if="errorMessage" >{{ errorMessage }}</div>
+        <div class="success-message" v-if="successMessage" >{{ successMessage }}</div>
         </div>
-    </div>
+      </div>
   </template>
   
   <script setup>
@@ -101,12 +101,12 @@
       });
 
       if (response.status === 200) {
-        successMessage.value = '用戶信息更新成功';
+        successMessage.value = '用戶信息資料成功';
         // 更新 Vuex 中的用戶信息
         store.commit('setUser', response.data.updatedUser);
       }
     } catch (error) {
-      errorMessage.value = error.response?.data?.error || '更新用戶信息失敗';
+      errorMessage.value = error.response?.data?.error || '更新用戶資料失敗';
     } finally {
       isLoading.value = false;
     }
@@ -114,6 +114,7 @@
   </script>
   
   <style scoped>
+
   .profile-container {
     max-width: 400px;
     margin: 0 auto;
@@ -122,19 +123,12 @@
     border-radius: 8px;
     background-color: #f9f9f9;
   }
-  
-  .error {
-    color: red;
-  }
-  
-  .success {
-    color: green;
-  }
 
   .disabled-input {
   background-color: #f0f0f0; /* 灰色背景 */
   color: #888; /* 灰色文字 */
   cursor: not-allowed; /* 改變滑鼠指針樣式 */
   }
+
   </style>
   

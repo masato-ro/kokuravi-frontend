@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="login-container">
+    <div class="login-container" v-if="!isLoggedIn">
       <h1>用戶登入</h1>
       <form @submit.prevent="handleLogin">
         <div class="form-group">
@@ -31,13 +31,16 @@
           <button type="submit" :disabled="isLoading">{{ isLoading ? '登入中...' : '登入' }}</button>
         </div>
       </form>
-      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+      <div class="error-message" v-if="errorMessage" >{{ errorMessage }}</div>
+    </div>
+    <div v-else>
+      <div class="error-message">您已經登入了！</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import axios from 'axios';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -52,6 +55,7 @@ const captchaInput = ref(''); // 用戶輸入的驗證碼
 const captchaText = ref('');  // 後端提供的驗證碼文本
 const captchaUrl = ref(`${import.meta.env.VITE_APP_API_URL}/api/captcha/image`); // 驗證碼圖片 URL
 const errorMessage = ref('');
+const isLoggedIn = computed(() => store.getters.isAuthenticated);
 
 // 刷新驗證碼函數
 const refreshCaptcha = async () => {
@@ -67,8 +71,11 @@ const refreshCaptcha = async () => {
 };
 
 // 當組件加載時，獲取初始的驗證碼
-onMounted(() => {
-  refreshCaptcha();
+onMounted(async () => {
+  isLoggedIn.value = store.state.user.isLoggedIn; // 假設 Vuex 存儲用戶登錄狀態
+  if (!isLoggedIn.value) {
+    await refreshCaptcha();
+  }
 });
 
 const handleLogin = async () => {
@@ -108,11 +115,5 @@ const handleLogin = async () => {
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
-}
-
-.error {
-  color: red;
-  text-align: center;
-  margin-top: 1rem;
 }
 </style>

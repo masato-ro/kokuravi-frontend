@@ -1,7 +1,7 @@
 <template>
     <div class="modal">
       <div class="modal-content">
-        <span class="close" @click="$emit('close')">&times;</span>
+        <button class="close-button" @click="$emit('close')">×</button>
         <h2>編輯類別</h2>
         <form @submit.prevent="saveCategory">
           <div class="form-group">
@@ -28,6 +28,7 @@
             <button type="button" @click="$emit('close')">取消</button> 
           </div>
         </form>
+        <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
       </div>
     </div>
   </template>
@@ -51,6 +52,7 @@
   const selectedCategoryId = ref(''); // 用於存儲選擇的類別 ID
   const editedCategoryName = ref('');  // 編輯的類別名稱
   const parentId = ref(null);           // 可以用來存儲 parentId
+  const errorMessage = ref(''); // 添加錯誤消息變數
   
   // Watch for category selection changes
   watch(selectedCategoryId, (newVal) => {
@@ -84,8 +86,7 @@
         emit('close'); // 關閉模態框
       }
     } catch (error) {
-      console.error('Error updating category:', error); // 錯誤處理
-      alert('更新類別失敗，請稍後再試！');
+      errorMessage.value = error.message;
     }
   };
   </script>

@@ -1,5 +1,10 @@
 <template>
   <div class="container">
+    <!-- 檢查 API URL 是否設定 -->
+    <div v-if="!isApiUrlSet" class="error-message">
+      警告: API URL 未設定，請檢查環境變數 VITE_APP_API_URL。
+    </div>
+
     <h1 v-if="user">使用者 "{{ user.username }}" 書籤</h1>
     <!-- 顯示所有類別，從左到右排列 -->
     <ul v-if="user" class="category-list">
@@ -65,7 +70,6 @@
 
       <!-- 搜索框 -->
       <input type="text" placeholder="搜索書籤" v-model="searchKeyword" class="search-input" />
-
     </div>
 
     <table v-if="filteredBookmarks.length">
@@ -103,7 +107,7 @@
         </tr>
       </tbody>
     </table>
-    <p v-else>無書籤可顯示。</p>
+    <p v-else class="info-message">無書籤可顯示。</p>
 
     <!-- 控製編輯書籤Modal -->
     <BookmarkCard v-if="isEditModalVisible" 
@@ -129,6 +133,9 @@ const store = useStore();
 const user = computed(() => store.state.user); // 從 Vuex 獲取當前用戶信息
 const categories = computed(() => store.state.categories);
 
+// 檢查 API URL 是否設定
+const isApiUrlSet = computed(() => !!import.meta.env.VITE_APP_API_URL);
+
 // 定義回響式數據
 const bookmarks = ref([]); // 存儲用戶書籤的數組
 const isModalVisible = ref(false); // 控製模態框的顯示與否
@@ -144,6 +151,7 @@ const isEditCategoryModalVisible = ref(false); // 控製編輯類別模態框的
 const isBookmarkEditMode = ref(false); // 用於控製編輯模式
 const searchKeyword = ref(''); // 用於存儲搜索關鍵詞
 const isAscending = ref(true); // 用於跟蹤排序的方嚮，初始為升序
+const errorMessage = ref(''); // 添加錯誤消息變數
 
 // 調用刷新函數
 const refresh = async () => {
@@ -151,6 +159,7 @@ const refresh = async () => {
     await fetchBookmarks();
   } catch (error) {
     console.error('Error refreshing bookmarks:', error);
+    errorMessage.value = error.message;
   }
 };
 
@@ -172,6 +181,7 @@ const fetchBookmarks = async () => {
     bookmarks.value = await response.json(); // 將返回的書籤數據存儲在 bookmarks 中
   } catch (error) {
     console.error('Error fetching bookmarks:', error);
+    errorMessage.value = error.message;
   }
 }
 
@@ -201,6 +211,7 @@ const deleteSelectedBookmarks = async () => {
     await fetchBookmarks(); // 刷新書籤列錶
   } catch (error) {
     console.error('Error deleting bookmarks:', error);
+    errorMessage.value = error.message;
   }
 }
 

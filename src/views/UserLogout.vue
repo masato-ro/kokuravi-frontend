@@ -1,5 +1,5 @@
 <template>
-    <div class="logout-message">
+    <div class="info-message">
       <h2>登出成功</h2>
       <p>正在為您返回登入頁面...</p>
     </div>
@@ -28,8 +28,5 @@
   </script>
   
   <style scoped>
-  .logout-message {
-    text-align: center;
-    margin-top: 50px;
-  }
+  
   </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="modal">
     <div class="modal-content">
-      <span class="close" @click="$emit('close')">&times;</span>
+      <button class="close-button" @click="$emit('close')">×</button>
       <h2>編輯書籤</h2>
       <form @submit.prevent="updateBookmark">
         <div class="form-group">
@@ -37,6 +37,7 @@
           </div>
         </div>
       </form>
+      <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
     </div>
   </div>
 </template>
@@ -58,6 +59,7 @@ const url = ref(bookmark.value.url);
 const icon = ref(bookmark.value.icon);
 const description = ref(bookmark.value.description);
 const categoryId = ref(bookmark.value.categoryId); // 添加類別ID
+const errorMessage = ref(''); // 添加錯誤消息變數
 
 // watch 監聽 bookmark 的變化，更新相應的字段
 watch(bookmark, (newBookmark) => {
@@ -88,7 +90,7 @@ const updateBookmark = async () => {
     emit('update'); 
     emit('close');  // 關閉模態框
   } catch (error) {
-    console.error('更新書籤錯誤:', error);
+    errorMessage.value = '更新書籤失敗：' + error.message; // 設定錯誤消息
   }
 };
 </script>

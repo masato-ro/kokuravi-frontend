@@ -1,7 +1,7 @@
 <template>
     <div class="modal">
       <div class="modal-content">
-        <span class="close" @click="$emit('close')">&times;</span>
+        <button class="close-button" @click="$emit('close')">×</button>
         <h2>新增類別</h2>
         <form @submit.prevent="submitForm">
           <div class="form-group">
@@ -10,6 +10,7 @@
               <button type="button" @click="$emit('close')">取消</button>
           </div>
         </form>
+        <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
       </div>
     </div>
 </template>
@@ -22,6 +23,7 @@ import axios from 'axios';
 const emit = defineEmits(['add', 'close']);
 const store = useStore();
 const name = ref(''); // 用來存儲類別名稱的響應式變數
+const errorMessage = ref(''); // 添加錯誤消息變數
 
 // 提交表單函數
 const submitForm = async () => {
@@ -40,13 +42,14 @@ const submitForm = async () => {
         resetForm(); // 重置表單
         emit('close');
     } catch (error) {
-            console.error('Error creating category:', error); // 捕獲並顯示錯誤
+      errorMessage.value = error.message;
     }
 };
 
 // 重置表單函數
 const resetForm = () => {
     name.value = ''; // 清空類別名稱
+    errorMessage.value = '';
 };
 </script>
 

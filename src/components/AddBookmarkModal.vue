@@ -1,7 +1,7 @@
 <template>
   <div class="modal">
     <div class="modal-content">
-      <span class="close" @click="$emit('close')">&times;</span>
+      <button class="close-button" @click="$emit('close')">×</button>
       <h2>添加書籤</h2>
       <form @submit.prevent="debouncedHandleSubmit">
         <div class="form-group">
@@ -36,7 +36,7 @@
           </div>
         </div>  
       </form>
-      <p v-if="errorMessage">{{ errorMessage }}</p>
+      <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
     </div>
   </div>
 </template>
@@ -100,7 +100,6 @@ const handleSubmit = async () => {
     resetForm();
     emit('close');
   } catch (error) {
-    console.error('添加書籤錯誤:', error);
     errorMessage.value = error.message;
   }
 };

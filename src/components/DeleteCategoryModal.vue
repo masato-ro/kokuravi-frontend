@@ -1,7 +1,7 @@
 <template>
     <div class="modal">
       <div class="modal-content">
-        <span class="close" @click="$emit('close')">&times;</span>
+        <button class="close-button" @click="$emit('close')">×</button>
         <h2>刪除類別</h2>
         <form @submit.prevent="deleteCategory">
           <div class="form-group">
@@ -18,6 +18,7 @@
             <button type="button" @click="$emit('close')">取消</button>
           </div>
         </form>
+        <div class="error-message" v-if="errorMessage">{{ errorMessage }}</div>
       </div>
     </div>
   </template>
@@ -31,6 +32,7 @@
   const store = useStore();
   const categories = ref([]);
   const selectedCategoryId = ref('');
+  const errorMessage = ref(''); // 添加錯誤消息變數
   
   // 獲取類別列表
   const fetchCategories = async () => {
@@ -52,7 +54,7 @@
       emit('close'); // 關閉模態框
       fetchCategories(); // 刷新類別列表
     } catch (error) {
-      console.error('刪除類別錯誤:', error);
+      errorMessage.value = error.message;
     }
   };
   

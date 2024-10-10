@@ -69,6 +69,28 @@ button:disabled {
   background-color: #ccc;
 }
 
+.close-button {
+  position: absolute; /* 绝对定位 */
+  top: -30px;
+  right: -20px;
+  background-color: #808080; /* 按钮背景为红色 */
+  border: none; /* 无边框 */
+  border-radius: 50%; /* 圆形按钮 */
+  width: 30px; /* 按钮宽度 */
+  height: 30px; /* 按钮高度 */
+  display: flex; /* 使用 flexbox 中心对齐内容 */
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  color: white; /* 字体颜色为白色 */
+  font-size: 20px; /* 字体大小 */
+  cursor: pointer; /* 鼠标指针变为手形 */
+  transition: background-color 0.3s; /* 添加过渡效果 */
+}
+
+.close-button:hover {
+  background-color: #ff6666; /* 悬停时的背景颜色变化 */
+}
+
 .form-group {
   margin-bottom: 1rem;
 }
@@ -130,6 +152,14 @@ button:disabled {
   padding: 10px; /* 添加內邊距 */
 }
 
+.info-message {
+  color: blue; /* 你可以根據需要更改顏色 */
+  margin-top: 1rem;
+  border: 1px solid blue; /* 添加邊框 */
+  background-color: rgba(0, 0, 255, 0.1); /* 半透明背景 */
+  padding: 10px; /* 添加內邊距 */
+}
+
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -152,6 +182,7 @@ button:disabled {
 }
 
 .modal-content {
+  position: relative;
   background: white;
   padding: 20px;
   border-radius: 5px;
