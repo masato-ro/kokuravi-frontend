@@ -15,11 +15,11 @@
           </div>
           <div>
             <label for="icon">圖示 URL：</label>
-            <input type="url" v-model="icon" required />
+            <input type="url" v-model="icon" placeholder="如為空，嘗試抓取網站預設圖示"/>
           </div>
           <div>
             <label for="description">描述：</label>
-            <textarea v-model="description"></textarea>
+            <textarea v-model="description" required></textarea>
           </div>
           <div>
             <label for="categoryId">選擇類別：</label>
@@ -45,6 +45,7 @@
 import { ref, computed, defineEmits, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { debounce } from 'lodash';
+import axios from 'axios';
 
 const store = useStore();
 const emit = defineEmits(['add', 'close']);
@@ -78,30 +79,36 @@ const handleSubmit = async () => {
     return;
   }
 
+  const faviconUrl = icon.value.trim() || `${new URL(url.value).origin}/favicon.ico`;
+
   try {
-    const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/api/users/bookmarks/add`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        userId,
-        categoryId: categoryId.value,
-        url: url.value,
-        name: name.value,
-        icon: icon.value,
-        description: description.value,
-      }),
+    const response = await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/users/bookmarks/add`, {
+      userId,
+      categoryId: categoryId.value,
+      url: url.value,
+      name: name.value,
+      icon: faviconUrl,
+      description: description.value,
     });
-    if (!response.ok) {
+
+    // 檢查回響狀態碼
+    if (response.status === 201) {
+      emit('add', { 
+        name: name.value, 
+        url: url.value, 
+        icon: faviconUrl, 
+        description: description.value, 
+        categoryId: categoryId.value 
+      });
+      resetForm();
+      emit('close');
+    } else {
       throw new Error('添加書籤失敗');
     }
-    emit('add', { name: name.value, url: url.value, icon: icon.value, description: description.value, categoryId: categoryId.value });
-    resetForm();
-    emit('close');
   } catch (error) {
-    errorMessage.value = error.message;
+    errorMessage.value = error.response ? error.response.data.error || '添加書籤失敗' : '添加書籤失敗';
   }
+
 };
 
 const resetForm = () => {

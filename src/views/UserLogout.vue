@@ -1,7 +1,9 @@
 <template>
-    <div class="info-message">
-      <h2>登出成功</h2>
-      <p>正在為您返回登入頁面...</p>
+    <div class="container">
+      <div class="success-message">
+        <p>登出成功</p>
+        <p>正在為您返回<a href="/login">登入</a>頁面...</p>
+      </div>
     </div>
   </template>
   
@@ -18,7 +20,7 @@
       onMounted(async () => {
         await store.dispatch('logout'); // 調用登出 action
         setTimeout(() => {
-          router.push('/login'); // 3秒後重定嚮到登入頁面
+          router.push('/'); // 3秒後重定嚮到登入頁面
         }, 3000);
       });
   

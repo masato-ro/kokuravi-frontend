@@ -11,6 +11,7 @@
             v-model="username"
             required
             placeholder="請輸入用戶名"
+            autocomplete="username"
           />
         </div>
         <div class="form-group">
@@ -21,6 +22,7 @@
             v-model="password"
             required
             placeholder="請輸入密碼"
+            autocomplete="current-password"
           />
         </div>
         <div class="form-group">
@@ -34,7 +36,7 @@
       <div class="error-message" v-if="errorMessage" >{{ errorMessage }}</div>
     </div>
     <div v-else>
-      <div class="error-message">您已經登入了！</div>
+        <div class="error-message">您已經登入了！</div>
     </div>
   </div>
 </template>
@@ -72,7 +74,6 @@ const refreshCaptcha = async () => {
 
 // 當組件加載時，獲取初始的驗證碼
 onMounted(async () => {
-  isLoggedIn.value = store.state.user.isLoggedIn; // 假設 Vuex 存儲用戶登錄狀態
   if (!isLoggedIn.value) {
     await refreshCaptcha();
   }
@@ -81,7 +82,6 @@ onMounted(async () => {
 const handleLogin = async () => {
   store.dispatch('clearError'); // 清除之前的錯誤信息
   isLoading.value = true; // 開始加載
-
   try {
     // 先確保驗證碼已被獲取
     await refreshCaptcha();
@@ -91,23 +91,18 @@ const handleLogin = async () => {
   }
     // 如果驗證碼正確，發送登入請求
     await store.dispatch('login', { username: username.value, password: password.value });
-    username.value = ''; // 清空用戶名
-    password.value = ''; // 清空密碼
-    captchaInput.value = ''; // 清空驗證碼輸入框
-    refreshCaptcha(); // 登入成功後刷新驗證碼
-    // 登入成功後重定嚮
-    await router.push('/'); // 確保 router 是從上下文中獲取的
+    await router.push('/');
   } catch (error) {
     console.error('登入錯誤:', error);
-    errorMessage.value = error.response?.data?.error || '登入失敗，請檢查用戶名和密碼。'; // 顯示後端返回的錯誤信息
+    errorMessage.value = error.response?.data?.error || '登入失敗，請檢查用戶名/密碼/驗證碼。'; // 顯示後端返回的錯誤信息
   } finally {
     isLoading.value = false; // 結束加載
-    refreshCaptcha(); // 無論是否成功，重新刷新驗證碼
   }
 };
 </script>
 
 <style scoped>
+
 .login-container {
   max-width: 400px;
   margin: 0 auto;
@@ -116,4 +111,5 @@ const handleLogin = async () => {
   border-radius: 8px;
   background-color: #f9f9f9;
 }
+
 </style>

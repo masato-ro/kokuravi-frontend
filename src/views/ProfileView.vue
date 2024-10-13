@@ -70,34 +70,34 @@
     
     // 檢查密碼是否一緻
     if (password.value !== confirmPassword.value) {
-    errorMessage.value = '密碼不一致，請重新輸入。';
-    isLoading.value = false; // 重置加载状态
+    errorMessage.value = '密碼不一緻，請重新輸入。';
+    isLoading.value = false; // 重置加載狀態
     return;
     }
     
     try {
-      // 初始化更新数据对象，只包含非空的字段
+      // 初始化更新數據對象，隻包含非空的字段
       const updatedData = {};
 
-      // 仅在新电子邮件存在时添加到更新数据
+      // 僅在新電子郵件存在時添加到更新數據
       if (email.value) {
         updatedData.email = email.value;
       }
 
-      // 仅在密码字段不为空时进行哈希处理并添加到更新数据
+      // 僅在密碼字段不為空時進行哈希處理並添加到更新數據
       if (password.value) {
         updatedData.password = password.value;
       }
 
-      // 如果 `updatedData` 为空，表示没有需要更新的字段
+      // 如果 `updatedData` 為空，錶示冇有需要更新的字段
       if (Object.keys(updatedData).length === 0) {
-        throw new Error('没有需要更新的字段');
+        throw new Error('冇有需要更新的字段');
       }
 
-      // 发起 PUT 请求更新用户信息
+      // 發起 PUT 請求更新用戶信息
       const response = await axios.put(`${import.meta.env.VITE_APP_API_URL}/api/users`, {
         id: userId,
-        ...updatedData, // 使用展开运算符只传递需要更新的字段
+        ...updatedData, // 使用展開運算符隻傳遞需要更新的字段
       });
 
       if (response.status === 200) {

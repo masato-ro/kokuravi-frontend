@@ -73,7 +73,7 @@ watch(bookmark, (newBookmark) => {
 // 更新書籤的方法
 const updateBookmark = async () => {
   try {
-    const response = await axios.put(`${import.meta.env.VITE_APP_API_URL}}/api/users/bookmarks`, {
+    const response = await axios.put(`${import.meta.env.VITE_APP_API_URL}/api/users/bookmarks`, {
       id: bookmark.value._id, // 傳遞書籤ID
       categoryId: categoryId.value, // 更新類別
       url: url.value,

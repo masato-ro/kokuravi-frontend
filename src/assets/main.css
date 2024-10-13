@@ -1,15 +1,16 @@
 @import './base.css';
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+#app.light {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 0rem;
   font-weight: normal;
-  color: #333333; /* 確保文字顔色與背景有足夠的對比度 */
+  background-color: #ffffff;
+  color: hsl(220, 16%, 22%); /* 確保文字顔色與背景有足夠的對比度 */
 }
 
-a,
-.green {
+a, .green {
   text-decoration: none;
   color: hsla(160, 100%, 37%, 1); /* 鏈接顔色 */
   transition: 0.4s;
@@ -70,25 +71,25 @@ button:disabled {
 }
 
 .close-button {
-  position: absolute; /* 绝对定位 */
+  position: absolute; /* 絕對定位 */
   top: -30px;
   right: -20px;
-  background-color: #808080; /* 按钮背景为红色 */
-  border: none; /* 无边框 */
-  border-radius: 50%; /* 圆形按钮 */
-  width: 30px; /* 按钮宽度 */
-  height: 30px; /* 按钮高度 */
-  display: flex; /* 使用 flexbox 中心对齐内容 */
-  justify-content: center; /* 水平居中 */
+  background-color: #808080; /* 按鈕背景 */
+  border: none; /* 無邊框 */
+  border-radius: 50%; /* 圓形按鈕 */
+  width: 30px; /* 按鈕寬度 */
+  height: 30px; /* 按鈕高度 */
+  display: flex; /* 使用 flexbox 中心對齊內容 */
+  justify-content: center; /* 水準居中 */
   align-items: center; /* 垂直居中 */
-  color: white; /* 字体颜色为白色 */
-  font-size: 20px; /* 字体大小 */
-  cursor: pointer; /* 鼠标指针变为手形 */
-  transition: background-color 0.3s; /* 添加过渡效果 */
+  color: white; /* 字體顔色為白色 */
+  font-size: 20px; /* 字體大小 */
+  cursor: pointer; /* 滑鼠指針變為手形 */
+  transition: background-color 0.3s; /* 添加過渡效果 */
 }
 
 .close-button:hover {
-  background-color: #ff6666; /* 悬停时的背景颜色变化 */
+  background-color: #ff6666; /* 懸停時的背景顔色變化 */
 }
 
 .form-group {
@@ -193,8 +194,8 @@ button:disabled {
 }
 
 .favicon {
-  width: 16px;  /* 设定固定宽度 */
-  height: 16px; /* 设定固定高度 */
+  width: 16px;  /* 設定固定寬度 */
+  height: 16px; /* 設定固定高度 */
 }
 
 table {
@@ -211,4 +212,70 @@ th, td {
 
 th {
   background-color: #f4f4f4;
+}
+
+/* 夜間模式設置 */
+#app.dark {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 0rem;
+  background-color: #121212;
+
+  a, .green {
+      color: hsla(160, 100%, 70%, 1); /* 調亮鏈接顏色 */
+  }
+
+  a:hover {
+      color: #88c0d0; /* 鏈接懸停時的顏色 */
+  }
+
+  h1 {
+      color: #81a1c1;
+  }
+
+  h2, p, li {
+      color: #e5e9f0; /* 標題顏色 */
+  }
+
+  button {
+      background-color: #5e81ac;
+      color: #ffffff;
+  }
+
+  button:hover {
+      background-color: #4c566a;
+  }
+
+  .close-button {
+      background-color: #4c566a;
+  }
+
+  .close-button:hover {
+      background-color: #bf616a;
+  }
+
+  .modal-content {
+      background-color: #2e3440; /* 深色背景 */
+      color: #d8dee9; /* 文字顏色 */
+  }
+
+  table {
+      background-color: #2e3440;
+      color: #eceff4;
+  }
+
+  th {
+    background-color: #f4f4f4;
+    color: #121212; /* 表頭文字顏色 */
+  }
+
+  header, footer {
+    background-color: #121212;
+    color: #ffffff; /* 白色文字 */
+  }
+
+  .header-title {
+    color: #ffffff; /* 深灰色 */
+  }
 }
